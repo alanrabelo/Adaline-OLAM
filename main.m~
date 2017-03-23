@@ -1,0 +1,48 @@
+
+
+inputs = [0.1:0.1:5]';
+inputLenght = length(inputs);
+
+desiredOutputs = 2*inputs + 5;
+
+noiseForOutputs = (rand(inputLenght,1) * 2 - 1) * 0.5;
+desiredOutputs = desiredOutputs + noiseForOutputs;
+
+
+randomIndexes = randperm(length(inputs));
+
+inputsForTrainning = inputs(randomIndexes(1: 0.8 * inputLenght));
+inputsForTest = inputs(randomIndexes(0.8 * inputLenght + 1 : inputLenght));
+
+inputLenghtTrainning = length(inputsForTrainning);
+inputLenghtTest = length(inputsForTest);
+
+inputsForTrainning = [repmat(-1, inputLenghtTrainning, 1) inputsForTrainning];
+
+% Algoritmo do OLAM
+inverseOfInputs = inv(inputsForTrainning' * inputsForTrainning);
+desiredOutputsForTest = desiredOutputs(randomIndexes(0.8 * inputLenght : inpu ))';
+weights = inverseOfInputs * inputsForTrainning' * desiredOutputsForTest.' ;
+
+% Teste
+
+inputsForTest = [repmat(-1, inputLenghtTest, 1) inputsForTest];
+outputsFromTest = inputsForTest * weights;
+
+error = desiredOutputs(randomIndexes(randomIndexes(0.8 * inputLenght + 1 : inputLenght))) - outputsFromTest;
+
+sum = 0;
+
+
+
+
+
+
+% plot(x,y, 'ro');
+plot(inputsForTest(:, 2),desiredOutputsForTest, 'ro'); hold on;
+
+plot(inputsForTest(2:length(inputsForTest), :), outputsFromTest, 'bo');
+
+%rand()*2 - 1, length(x)
+
+
